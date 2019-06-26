@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./db_data:/var/lib/postgres/data
+      - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./tables.sql:/docker-entrypoint-initdb.d/2-tables.sql
+      - ./data.sql:/docker-entrypoint-initdb.d/3-data.sql
+    environment:
+      POSTGRES_DB: testwebdb    
+      POSTGRES_USER: web1
+      POSTGRES_PASSWORD: secret
+    ports:
+      - 5432:5432
+  app:
+    build: .
+    command: ["./wait-for-it.sh","db:5432", "--","go", "run", "server.go"]
+    volumes:
+      - .:/go/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    links:
+      - db
+volumes:
+    db_data:
