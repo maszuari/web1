@@ -34,7 +34,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	mydb, err := modeler.Connect()
 	if err != nil {
-		log.Fatal("Error DB connection error", err)
+		log.Fatal("Error DB connection error. Check database IP address. ", err)
 	}
 	h := &Handler{db: mydb}
 	defer mydb.Close()
