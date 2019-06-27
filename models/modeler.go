@@ -24,7 +24,7 @@ func (db *DB) FindOrgByName(shortname string) (string, error) {
 
 func Connect() (*DB, error) {
 	//db, err := sqlx.Connect("postgres", "host=172.17.0.1 user=web1 dbname=testwebdb sslmode=disable password=secret")
-	db, err := sqlx.Connect("postgres", "postgresql://web1:secret@db/testdb?sslmode=disable")
+	db, err := sqlx.Connect("postgres", "postgresql://web1:secret@db/testwebdb?sslmode=disable")
 	if err != nil {
 		return nil, err
 	}

@@ -12,9 +12,7 @@ services:
       POSTGRES_USER: web1
       POSTGRES_PASSWORD: secret
     ports:
-      - 5432:5432
-    networks:
-      - mynet  
+      - 5432:5432  
   app:
     build: .
     command: ["./wait-for-it.sh","db:5432", "--","go", "run", "server.go"]
@@ -28,6 +26,3 @@ services:
       - db
 volumes:
     db_data:
-networks:
-  mynet:
-    driver: "bridge"
